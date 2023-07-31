@@ -14,12 +14,13 @@ require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
+require "image_processing/mini_magick" 
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Insta
+module Instagram
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
@@ -28,13 +29,15 @@ module Insta
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
-    config.time_zone = "Brasilia"
-    config.i18n.default_locale = "pt-BR"
+
+    config.time_zone = 'Brasilia'
+    config.i18n.default_locale = 'pt-BR'
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.active_storage.variant_processor = :mini_magick
+
+    config.active_storage.variable_content_types = %w(image/png image/gif image/jpeg image/tiff image/vnd.adobe.photoshop image/vnd.microsoft.icon image/webp image/avif image/heic image/heif)
   end
 end
